@@ -38,17 +38,19 @@ def build_tree(words):
     return root
 
 def print_tree_edges(node):
+    if node.flag:
+        print('%s [color=red];' % id(node))
     if node.blue != None:
         print('%s -> %s [color=blue];' % (id(node), id(node.blue)))
-    for kid in node.kids.values():
-        print('%s -> %s [color=black];' % (id(node), id(kid)))
-        print_tree_edges(kid)
+    for ch in node.kids:
+        print('%s -> %s [color=black,label=%s];' % (id(node), id(node.kids[ch]), ch))
+        print_tree_edges(node.kids[ch])
 
 def print_tree(root):
     print('digraph test {')
     print_tree_edges(root)
     print('}')
 
-words = ['a','ab','bab','bc','bca','c','caa']
+words = ['a','ab','bab','bc','bca','c','caa', 'cd']
 tree = build_tree(words)
 print_tree(tree)
